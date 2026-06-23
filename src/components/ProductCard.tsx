@@ -36,7 +36,7 @@ export default function ProductCard({ product, isSpecialEdition, onClick }: Prop
           key={imgIndex}
           src={product.images[imgIndex]}
           alt={`${product.name} — vue ${imgIndex + 1}`}
-          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Special badge */}
