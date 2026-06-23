@@ -18,7 +18,7 @@ export default function Hero() {
         {/* Bonne Année — secondary, narrow strip */}
         <div className="relative w-28 sm:w-44 lg:w-56 h-56 sm:h-80 lg:h-96 overflow-hidden border-l-2 border-[#111]">
           <img
-            src="images/articles/Direction_artistique_(2).jpg"
+            src="images/Logo.jpg"
             alt="Bonne Année 2026 — Lix'Scènes"
             className="absolute inset-0 w-full h-full object-cover object-top"
           />
