@@ -1,0 +1,48 @@
+name: Deploiement Automatique Site
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Installation de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Installation des dependances
+        run: npm install
+
+      - name: Compilation du site (Build Vite)
+        run: npm run build
+
+      - name: Configuration de GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Telechargement du site compile
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Mise en ligne finale
+        id: deployment
+        uses: actions/deploy-pages@v4
