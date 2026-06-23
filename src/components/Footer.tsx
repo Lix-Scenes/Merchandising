@@ -64,7 +64,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="flex items-center gap-3">
             <img
-              src="/images/Logo.jpg"
+              src="images/Logo.jpg"
               alt="Lix'Scènes"
               className="h-12 w-auto object-contain"
             />
