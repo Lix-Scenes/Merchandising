@@ -26,7 +26,7 @@ export const products: Product[] = [
     images: [
       'images/articles/t-shirt_homme.jpeg',
       'images/articles/t-shirt_homme_2.jpeg',
-      'images/ori/t-shirt homme ori.jpeg',
+      'images/ori/t-shirt_homme_ori.jpeg',
     ],
     category: 'homme',
   },
@@ -38,7 +38,7 @@ export const products: Product[] = [
     images: [
       'images/articles/debardeur_homme.jpeg',
       'images/articles/debardeur_homme_2.jpeg',
-      'images/ori/debardeur homme ori.jpeg',
+      'images/ori/debardeur_homme_ori.jpeg',
     ],
     category: 'homme',
   },
@@ -50,7 +50,7 @@ export const products: Product[] = [
     images: [
       'images/articles/t-shirt_homme_baseball.jpeg',
       'images/articles/t-shirt_homme_baseball_2.jpeg',
-      'images/ori/t-shirt homme baseball ori.jpeg',
+      'images/ori/t-shirt_homme_baseball_ori.jpeg',
     ],
     category: 'homme',
   },
@@ -62,7 +62,7 @@ export const products: Product[] = [
     images: [
       'images/articles/gilet_a_capuche_homme.jpeg',
       'images/articles/gilet_a_capuche_homme_2.jpeg',
-      'images/ori/gilet a capuche homme ori.jpeg',
+      'images/ori/gilet_a_capuche_homme_ori.jpeg',
     ],
     category: 'homme',
   },
@@ -74,7 +74,7 @@ export const products: Product[] = [
     images: [
       'images/articles/blouson_teddy_homme.jpeg',
       'images/articles/blouson_teddy_homme_2.jpeg',
-      'images/ori/blouson teddy homme ori.jpeg',
+      'images/ori/blouson_teddy_homme_ori.jpeg',
     ],
     category: 'homme',
   },
@@ -86,7 +86,7 @@ export const products: Product[] = [
     images: [
       'images/articles/t-shirt_femme.jpeg',
       'images/articles/t-shirt_femme_2.jpeg',
-      'images/ori/t-shirt femme ori.jpeg',
+      'images/ori/t-shirt_femme_ori.jpeg',
     ],
     category: 'femme',
   },
@@ -98,7 +98,7 @@ export const products: Product[] = [
     images: [
       'images/articles/debardeur_femme.jpeg',
       'images/articles/debardeur_femme_2.jpeg',
-      'images/ori/debardeur femme ori.jpeg',
+      'images/ori/debardeur_femme_ori.jpeg',
     ],
     category: 'femme',
   },
@@ -110,7 +110,7 @@ export const products: Product[] = [
     images: [
       'images/articles/gilet_a_capuche_femme.jpeg',
       'images/articles/gilet_a_capuche_femme_2.jpeg',
-      'images/ori/gilet a capuche femme ori.jpeg',
+      'images/ori/gilet_a_capuche_femme_ori.jpeg',
     ],
     category: 'femme',
   },
@@ -122,7 +122,7 @@ export const products: Product[] = [
     images: [
       'images/articles/sweat_mixte.jpeg',
       'images/articles/sweat_mixte_2.jpeg',
-      'images/ori/sweat mixte ori.jpeg',
+      'images/ori/sweat_mixte_ori.jpeg',
     ],
     category: 'mixte',
   },
@@ -134,7 +134,7 @@ export const products: Product[] = [
     images: [
       'images/articles/sweat_a_capuche_mixte.jpeg',
       'images/articles/sweat_a_capuche_mixte_2.jpeg',
-      'images/ori/sweat a capuche mixte ori.jpeg',
+      'images/ori/sweat_a_capuche_mixte_ori.jpeg',
     ],
     category: 'mixte',
   },
@@ -146,7 +146,7 @@ export const products: Product[] = [
     images: [
       'images/articles/t-shirt_enfant.jpeg',
       'images/articles/t-shirt_enfant_2.jpeg',
-      'images/ori/t-shirt enfant ori.jpeg',
+      'images/ori/t-shirt_enfant_ori.jpeg',
     ],
     category: 'enfant',
   },
@@ -158,7 +158,7 @@ export const products: Product[] = [
     images: [
       'images/articles/tablier.jpeg',
       'images/articles/tablier_2.jpeg',
-      'images/ori/tablier ori.jpeg',
+      'images/ori/tablier_ori.jpeg',
     ],
     category: 'accessoires',
   },
@@ -170,7 +170,7 @@ export const products: Product[] = [
     images: [
       'images/articles/casquette.jpeg',
       'images/articles/casquette_2.jpeg',
-      'images/ori/casquette ori.jpeg',
+      'images/ori/casquette_ori.jpeg',
     ],
     category: 'accessoires',
   },
@@ -182,7 +182,7 @@ export const products: Product[] = [
     images: [
       'images/articles/bonnet.jpeg',
       'images/articles/bonnet_2.jpeg',
-      'images/ori/bonnet ori.jpeg',
+      'images/ori/bonnet_ori.jpeg',
     ],
     category: 'accessoires',
   },
@@ -194,7 +194,7 @@ export const products: Product[] = [
     images: [
       'images/articles/sac_a_dos.jpeg',
       'images/articles/sac_a_dos_2.jpeg',
-      'images/ori/sac a dos ori.jpeg',
+      'images/ori/sac_a_dos_ori.jpeg',
     ],
     category: 'accessoires',
   },
@@ -206,7 +206,7 @@ export const products: Product[] = [
     images: [
       'images/articles/t-shirt_edition_speciale_homme.jpeg',
       'images/articles/t-shirt_edition_speciale_homme_2.jpeg',
-      'images/ori/t-shirt edition speciale homme ori.jpeg',
+      'images/ori/t-shirt_edition_speciale_homme_ori.jpeg',
     ],
     category: 'edition-speciale',
     isSpecial: true,
@@ -219,7 +219,7 @@ export const products: Product[] = [
     images: [
       'images/articles/t-shirt_edition_speciale_femme.jpeg',
       'images/articles/t-shirt_edition_speciale_femme_2.jpeg',
-      'images/ori/t-shirt edition speciale femme ori.jpeg',
+      'images/ori/t-shirt_edition_speciale_femme_ori.jpeg',
     ],
     category: 'edition-speciale',
     isSpecial: true,
