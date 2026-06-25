@@ -18,7 +18,7 @@ export default function Hero() {
         {/* Changement de bg-stone-900 à bg-white pour que le fond blanc de ton logo s'intègre parfaitement */}
         <div className="flex-1 min-w-[180px] max-w-[320px] border-l border-white/10 bg-white hidden sm:block">
           <img
-            src="images/DA/Logo.jpg"
+            src="images/DA/Logo_rond.png"
             alt="Bonne Année 2026 — Lix'Scènes"
             /* CORRIGÉ : object-contain pour que le logo rond reste entier */
             className="w-full h-full object-contain object-center"
