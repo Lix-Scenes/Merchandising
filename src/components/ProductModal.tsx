@@ -10,17 +10,34 @@ interface Props {
 export default function ProductModal({ product, onClose }: Props) {
   const [activeImg, setActiveImg] = useState(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
 
-  // Close on Escape key
+  const hasMultipleImages = product.images.length > 1;
+
+  // Bloque le défilement du body + active l'indicateur de swipe sur mobile
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
     document.body.style.overflow = 'hidden';
+
+    if (hasMultipleImages) {
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      if (isTouchDevice) {
+        setShowSwipeHint(true);
+        const timer = setTimeout(() => setShowSwipeHint(false), 3500);
+        return () => {
+          window.removeEventListener('keydown', handler);
+          document.body.style.overflow = '';
+          clearTimeout(timer);
+        };
+      }
+    }
+
     return () => {
       window.removeEventListener('keydown', handler);
       document.body.style.overflow = '';
     };
-  }, [onClose]);
+  }, [onClose, hasMultipleImages]);
 
   const prev = () => setActiveImg(i => (i - 1 + product.images.length) % product.images.length);
   const next = () => setActiveImg(i => (i + 1) % product.images.length);
@@ -28,6 +45,7 @@ export default function ProductModal({ product, onClose }: Props) {
   // --- Gestion du Swipe ---
   const handleTouchStart = (e: TouchEvent) => {
     setTouchStartX(e.targetTouches[0].clientX);
+    setShowSwipeHint(false); // Cache l'indice dès que l'utilisateur interagit
   };
 
   const handleTouchEnd = (e: TouchEvent) => {
@@ -35,25 +53,27 @@ export default function ProductModal({ product, onClose }: Props) {
     
     const touchEndX = e.changedTouches[0].clientX;
     const diffX = touchStartX - touchEndX;
-    const minSwipeDistance = 50; // Seuil en pixels pour valider le swipe
+    const minSwipeDistance = 50;
 
     if (diffX > minSwipeDistance) {
-      // Swipe vers la gauche -> Image suivante
       next();
     } else if (diffX < -minSwipeDistance) {
-      // Swipe vers la droite -> Image précédente
       prev();
     }
     
     setTouchStartX(null);
   };
-  // -------------------------
 
   return (
     <div
       className="fixed inset-0 z-[100] flex items-stretch justify-end"
       onClick={onClose}
     >
+      {/* Préchargement de toutes les images de la galerie pour une navigation instantanée */}
+      {product.images.map((src, idx) => (
+        <link key={idx} rel="preload" as="image" href={src} />
+      ))}
+
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
@@ -88,8 +108,8 @@ export default function ProductModal({ product, onClose }: Props) {
         <div 
           className="relative bg-stone-100 shrink-0 select-none touch-pan-y" 
           style={{ minHeight: '55vh' }}
-          onTouchStart={product.images.length > 1 ? handleTouchStart : undefined}
-          onTouchEnd={product.images.length > 1 ? handleTouchEnd : undefined}
+          onTouchStart={hasMultipleImages ? handleTouchStart : undefined}
+          onTouchEnd={hasMultipleImages ? handleTouchEnd : undefined}
         >
           <img
             key={activeImg}
@@ -99,7 +119,14 @@ export default function ProductModal({ product, onClose }: Props) {
             style={{ minHeight: '55vh', maxHeight: '65vh' }}
           />
 
-          {product.images.length > 1 && (
+          {/* Indication Swipe Visuelle sur Mobile */}
+          {showSwipeHint && (
+            <div className="absolute top-4 right-16 z-20 pointer-events-none bg-black/60 backdrop-blur-xs text-white text-[10px] font-medium px-2.5 py-1 rounded-full flex items-center gap-1.5 animate-pulse transition-opacity duration-500">
+              <span className="inline-block animate-bounce">↔</span> Glisser pour défiler
+            </div>
+          )}
+
+          {hasMultipleImages && (
             <>
               <button
                 onClick={prev}
@@ -136,7 +163,7 @@ export default function ProductModal({ product, onClose }: Props) {
         </div>
 
         {/* Thumbnails row */}
-        {product.images.length > 1 && (
+        {hasMultipleImages && (
           <div className="flex gap-2 px-5 py-3 border-b border-stone-100 overflow-x-auto shrink-0">
             {product.images.map((src, i) => (
               <button
