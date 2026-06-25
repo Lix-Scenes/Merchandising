@@ -1,5 +1,5 @@
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, TouchEvent } from 'react';
 import type { Product } from '../data/products';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 
 export default function ProductModal({ product, onClose }: Props) {
   const [activeImg, setActiveImg] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   // Close on Escape key
   useEffect(() => {
@@ -23,6 +24,30 @@ export default function ProductModal({ product, onClose }: Props) {
 
   const prev = () => setActiveImg(i => (i - 1 + product.images.length) % product.images.length);
   const next = () => setActiveImg(i => (i + 1) % product.images.length);
+
+  // --- Gestion du Swipe ---
+  const handleTouchStart = (e: TouchEvent) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (touchStartX === null) return;
+    
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    const minSwipeDistance = 50; // Seuil en pixels pour valider le swipe
+
+    if (diffX > minSwipeDistance) {
+      // Swipe vers la gauche -> Image suivante
+      next();
+    } else if (diffX < -minSwipeDistance) {
+      // Swipe vers la droite -> Image précédente
+      prev();
+    }
+    
+    setTouchStartX(null);
+  };
+  // -------------------------
 
   return (
     <div
@@ -60,12 +85,17 @@ export default function ProductModal({ product, onClose }: Props) {
         )}
 
         {/* Main image with navigation */}
-        <div className="relative bg-stone-100 shrink-0" style={{ minHeight: '55vh' }}>
+        <div 
+          className="relative bg-stone-100 shrink-0 select-none touch-pan-y" 
+          style={{ minHeight: '55vh' }}
+          onTouchStart={product.images.length > 1 ? handleTouchStart : undefined}
+          onTouchEnd={product.images.length > 1 ? handleTouchEnd : undefined}
+        >
           <img
             key={activeImg}
             src={product.images[activeImg]}
             alt={`${product.name} — photo ${activeImg + 1}`}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain pointer-events-none"
             style={{ minHeight: '55vh', maxHeight: '65vh' }}
           />
 
@@ -74,20 +104,20 @@ export default function ProductModal({ product, onClose }: Props) {
               <button
                 onClick={prev}
                 aria-label="Photo précédente"
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md hover:bg-white transition-colors"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md hover:bg-white transition-colors z-10"
               >
                 <ChevronLeft size={18} className="text-stone-700" />
               </button>
               <button
                 onClick={next}
                 aria-label="Photo suivante"
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md hover:bg-white transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md hover:bg-white transition-colors z-10"
               >
                 <ChevronRight size={18} className="text-stone-700" />
               </button>
 
               {/* Dot indicator */}
-              <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+              <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10">
                 {product.images.map((_, i) => (
                   <button
                     key={i}
