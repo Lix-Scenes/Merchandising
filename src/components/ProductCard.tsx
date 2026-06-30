@@ -38,6 +38,14 @@ export default function ProductCard({ product, isSpecialEdition, onClick, isFirs
   const next = (e: React.MouseEvent | TouchEvent) => {
     e.stopPropagation();
     setImgIndex(i => (i + 1) % product.images.length);
+
+    // [IDÉE : SWIPE] Suivi Google Analytics du changement d'image (Swipe tactile ou clic flèche)
+    if (typeof window !== 'undefined' && (window as any).gtag !== undefined) {
+      (window as any).gtag('event', 'view_item_list', {
+        item_name: product.name,
+        action_type: "swipe_image"
+      });
+    }
   };
 
   // --- Gestion du Survol (PC) ---
@@ -81,7 +89,6 @@ export default function ProductCard({ product, isSpecialEdition, onClick, isFirs
 
   // --- Gestion du clic pour Google Analytics ---
   const handleCardClick = () => {
-    // 1. Envoi uniquement du nom et de l'id à Google Analytics (sans les prix textuels qui bloquent les rapports)
     if (typeof window !== 'undefined' && (window as any).gtag !== undefined) {
       (window as any).gtag('event', 'select_item', {
         item_list_id: "catalogue_principal",
@@ -89,7 +96,9 @@ export default function ProductCard({ product, isSpecialEdition, onClick, isFirs
         items: [
           {
             item_id: product.id.toString(),
-            item_name: product.name
+            item_name: product.name,
+            // [IDÉE : ÉDITION SPÉCIALE] Distingue les modèles classiques des collections spéciales
+            item_variant: product.isSpecial ? "Édition Spéciale" : "Standard"
           }
         ]
       });
@@ -143,7 +152,6 @@ export default function ProductCard({ product, isSpecialEdition, onClick, isFirs
         {/* Badge "Swipe" flottant + Doigt qui bouge (Uniquement sur mobile au début) */}
         {showSwipeHint && (
           <div className="absolute top-3 right-3 z-20 pointer-events-none bg-black/75 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg transition-opacity duration-500">
-            {/* Icône SVG d'une main/doigt qui swipe horizontalement */}
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 24 24" 
@@ -251,16 +259,13 @@ export default function ProductCard({ product, isSpecialEdition, onClick, isFirs
         </div>
       </div>
 
-      {/* Styles des animations injectés proprement */}
       <style>{`
-        /* L'image glisse légèrement à gauche, à droite, puis revient au centre */
         @keyframes swipeTeaser {
           0%, 100% { transform: translateX(0); }
           25% { transform: translateX(-30px); }
           50% { transform: translateX(20px); }
           75% { transform: translateX(0); }
         }
-        /* Le petit doigt imite un glissement de gauche à droite */
         @keyframes fingerMove {
           0%, 100% { transform: translateX(4px); opacity: 0.4; }
           50% { transform: translateX(-4px); opacity: 1; }
